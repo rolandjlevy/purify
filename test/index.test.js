@@ -140,7 +140,7 @@ const expectedOutput = [
   expect(output).toEqual(expectedOutput)
 });
 
-test.only('ensure that totalSales is pure', function() {
+test('ensure that totalSales is pure', function() {
   const input = {
     Roland: [22, 11, 4, 1],
     Dan: [33, 6, 11],

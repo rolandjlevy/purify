@@ -77,11 +77,15 @@ function sortByLength(strings){
 //   return numbers.splice(-2);
 // }
 
+// function lastTwo(numbers){
+//   let newArray = [];
+//   newArray.push(numbers[numbers.length-2]);
+//   newArray.push(numbers[numbers.length-1]);
+//   return newArray;
+// }
+
 function lastTwo(numbers){
-  let newArray = [];
-  newArray.push(numbers[numbers.length-2]);
-  newArray.push(numbers[numbers.length-1]);
-  return newArray;
+  return [...numbers].splice(-2);
 }
 
 // cars is an array of car objects which look like
