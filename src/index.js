@@ -1,20 +1,27 @@
 // numbers is an array of numbers. Multiply all
 // numbers contained in array by multiplier
-function multiply(numbers, multiplier){
-  for(var i = 0; i < numbers.length; i++){
-    numbers[i] = numbers[i] * multiplier;
-  }
+// function multiply(numbers, multiplier){
+//   for(var i = 0; i < numbers.length; i++){
+//     numbers[i] = numbers[i] * multiplier;
+//   }
+//   return numbers;
+// }
 
-  return numbers;
+function multiply(numbers, multiplier){
+  return numbers.map(item => item *= multiplier);
 }
 
 // is an array of positive and negative numbers
 // make them all absolute numbers
+// function absolute(numbers){
+//   for(var i = 0; i < numbers.length; i++){
+//     numbers[i] = +numbers[i];
+//   }
+// }
 function absolute(numbers){
-  for(var i = 0; i < numbers.length; i++){
-    numbers[i] = +numbers[i];
-  }
+  return numbers.map(number => Math.abs(number))
 }
+
 // names is an array of name of nameObjects
 // {
 //   firstName: 'Alan',
@@ -22,32 +29,59 @@ function absolute(numbers){
 // }
 // concatenate first and last names and return
 // resulting array of names
+
+// function concatNames(names){
+//   for(var i = 0; i < names.length; i++){
+//     names[i] = `${names[i].firstName} ${names[i].lastName}`;
+//   }
+//   return names;
+// }
+  
 function concatNames(names){
-  for(var i = 0; i < names.length; i++){
-    names[i] = `${names[i].firstName} ${names[i].lastName}`;
-  }
-  return names;
+  return [...names].map(nameObject => {
+    return `${nameObject.firstName} ${nameObject.lastName}`;
+  });
 }
 
 // things is an array of numbers and strings. Convert
 // numbers in array to strings. For example 5 to "5"
+// function numbersToStrings(things){
+//   for(var i = 0; i < things.length; i++){
+//     things[i] = typeof things[i] === 'number' ? things[i]+'' : things[i];
+//   }
+// }
+
 function numbersToStrings(things){
-  for(var i = 0; i < things.length; i++){
-    things[i] = typeof things[i] === 'number' ? things[i]+'' : things[i];
-  }
+  return things.map(intNum => {
+    return intNum.toString()
+  })
 }
 
 // strings is an array of strings. sort them by length
+// function sortByLength(strings){
+//   strings.sort(function(a,b){
+//     return b.length - a.length;
+//   });
+// }
+
 function sortByLength(strings){
-  strings.sort(function(a,b){
-    return a.length - b.length;
-  });
+  let newStrings = [...strings].sort((a,b) => {
+    return b.length - a.length
+  })
+  return newStrings
 }
 
 // numbers is an array of numbers. Get last two numbers
 // from numbers
+// function lastTwo(numbers){
+//   return numbers.splice(-2);
+// }
+
 function lastTwo(numbers){
-  return numbers.splice(-2);
+  let newArray = [];
+  newArray.push(numbers[numbers.length-2]);
+  newArray.push(numbers[numbers.length-1]);
+  return newArray;
 }
 
 // cars is an array of car objects which look like
@@ -58,11 +92,19 @@ function lastTwo(numbers){
 //   year: 1992
 // }
 // increment the years by one year for all cars
+// function incrementYear(cars){
+//   for(var i = 0; i < cars.length; i++){
+//     cars[i].year++;
+//   }
+//   return cars;
+// }
+
 function incrementYear(cars){
-  for(var i = 0; i < cars.length; i++){
-    cars[i].year++;
-  }
-  return cars;
+  return cars.map(car => {
+    const carObject = Object.assign({}, car);
+    carObject.year++;
+    return carObject;
+  });
 }
 
 // sales is an object where the key is
@@ -74,17 +116,35 @@ function incrementYear(cars){
 //   Mary: [57, 12, 31, 4],
 //   Dave: [43, 2, 12]
 // }
-function totalSales( sales ){
-  Object.keys(sales).forEach(function(key){
-    let total = 0;
+// function totalSales( sales ){
+//   Object.keys(sales).forEach(function(key){
+//     let total = 0;
+//     for(var i = 0; i < sales[key].length; i++){
+//       total = total + sales[key][i];
+//     }
+//     sales[key] = total;
+//   });
+//   return sales;
+// }
 
-    for(var i = 0; i < sales[key].length; i++){
-      total = total + sales[key][i];
-    }
+// function totalSales(sales){
+//   let nameKeys = Object.keys(sales);
+//   return nameKeys.reduce((salesOutput, name) => {
+//     salesOutput[name] = sales[name].reduce((acc,item) => acc + item);
+//     return salesOutput;
+//   }, {});
+// }
 
-    sales[key] = total;
-  });
+function totalSales(sales){
+  let nameKeys = Object.keys(sales);
+  return nameKeys.reduce((salesOutput, name) => {
+    const salesTotal = sales[name].reduce((acc,item) => acc + item);
+    return Object.assign({}, salesOutput, {
+      [name]: salesTotal
+    })
+  }, {});
 }
+
 // stuff is an object with string keys and
 // string values. All keys and values are unique
 // Swap keys and values around, so that keys
@@ -150,3 +210,16 @@ function parseDates(dates){
 // Implement a solution using multiple pure functions
 
 // Write a unit test for each function
+
+module.exports = {
+  multiply,
+  absolute,
+  concatNames,
+  numbersToStrings,
+  sortByLength,
+  lastTwo,
+  incrementYear,
+  totalSales,
+  swapKeysAndValues,
+  parseDates
+}
